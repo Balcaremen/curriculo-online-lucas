@@ -1,0 +1,216 @@
+<!DOCTYPE html5>
+<html lang="pt-BR">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículo Online</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <header><h1>Currículo Online</h1></header>
+
+    <nav id="hud">
+
+        <li><a href="#sobre" title="Sobre">Sobre</a></li>
+        <li><a href="#formacao" title="Formação">Formação</a></li>
+        <li><a href="#portfolio" title="Portfólio">Portfólio</a></li>
+        <li><a href="#contato" title="Contato">Contato</a></li>
+
+        <button id="hudButton" type="button" onclick="hudToggle()">^</button>
+        <button id="tema" type="button" onclick="themeToggle()">?</button>
+
+    </nav>
+
+    <div id="box">
+        <form id="form" action="" method="">
+
+            <section id="sobre">
+                <h1>Sobre mim</h1>
+                <table class="info">
+
+                    <tr>
+
+                        <th><label for="data">Data de Nascimento:</label></th>
+                        <td><input id="data" type="date" name="data" style="cursor: text;"></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <!--Criação da tabela iterativa do usuário para Hobbies-->
+
+                        <th><label for="hobbies">Hobbies:</label></th>
+                        <td class="usuario-lista">
+                            <div class="usuraio-div">
+                                <input class="sem-envio" type="text" placeholder="Ex: Programar, Ler, Esportes...">
+                                <button type="button" title="Adicionar elemento">Adicionar</button>
+                            </div>
+                            <ul></ul>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th><label for="apresentacao">Apresentação:</label></th>
+                        <td>
+                            <textarea name="apresentacao" rows="5" id="apresentacao" placeholder="Quem é você? Conte um pouco sobre sua trajetória..." required></textarea>
+                            <span class="obrigatorio">* Campo obrigatório</span>
+                        </td>
+
+                    </tr>
+
+                </table>
+            </section>
+
+            <section id="formacao">
+                <h1>Formação</h1>
+                <table class="info">
+
+                    <tr>
+
+                        <!--Criação da tabela iterativa do usuário para Cursos-->
+
+                        <th><label for="cursos">Cursos:</label></th>
+                        <td class="usuario-lista">
+                            <div class="usuraio-div">
+                                <input class="sem-envio" type="text" placeholder="Ex: Ciência da Computação, Web Designer...">
+                                <button type="button" title="Adicionar elemento">Adicionar</button>
+                            </div>
+                            <ul></ul>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        
+                        <!--
+                        Criação da tabela iterativa do usuário para Idiomas
+                        Inserindo automaticamente o idioma nativo do navegador na lista
+                        -->
+
+                        <th><label for="idiomas">Idiomas:</label></th>
+                        <td class="usuario-lista">
+                            <div class="usuraio-div">
+                                <input class="sem-envio" id="idioma" type="text">
+                                <button type="button" title="Adicionar elemento">Adicionar</button>
+                            </div>
+                            <ul></ul>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th><label for="educacional">Formação Educacional:</label></th>
+                        <td>
+                            <select name="educacional" id="educacional">
+                                <option value="médio">Ensino Médio</option>
+                                <option value="tecnico">Curso Técnico</option>
+                                <option value="superior" selected>Ensino Superior</option>
+                                <option value="pos-graduado">Pós-Graduação</option>
+                                <option value="mestrado">Mestrado / Doutorado</option>
+                            </select>
+                        </td>
+
+                    </tr>
+
+                </table>
+            </section>
+
+            <section id="portfolio">
+                <h1>Portifólio</h1>
+                <table class="info">
+
+                    <tr>
+
+                        <!--Criação da tabela iterativa do usuário para Trabalhos-->
+
+                        <th><label for="trabalhos">Trabalhos:</label></th>
+                        <td class="usuario-lista">
+                            <div class="usuraio-div">
+                                <input class="sem-envio" type="text" placeholder="Ex: Meu GitHub https://github.com/usuario">
+                                <button type="button" title="Adicionar elemento">Adicionar</button>
+                            </div>
+                            <ul></ul>
+                        </td>
+
+                    </tr>
+
+                </table>
+            </section>
+
+            <section id="contato">
+                <h1>Contato</h1>
+                <table class="info">
+
+                    <tr>
+
+                        <!--Campo obrigatório-->
+
+                        <th><label for="nome">Nome:</label></th>
+                        <td>
+                            <input class="sem-envio" type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                            <span class="obrigatorio">* Campo obrigatório</span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <!--Campo obrigatório-->
+
+                        <th><label for="email">E-mail:</label></th>
+                        <td>
+                            <input class="sem-envio" type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+                            <span class="obrigatorio">* Campo obrigatório</span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        
+                        <!--Campo obrigatório-->
+
+                        <th><label for="tel">Telefone/WhatsApp:</label></th>
+                        <td>
+                            <input class="sem-envio" type="tel" id="tel" maxlength="11" name="telefone" placeholder="DDD + Número (Apenas números)" required>
+                            <span class="obrigatorio">* Campo obrigatório</span>
+                        </td>
+
+                    </tr>
+
+                </table>
+            </section>
+
+            <button type="submit" id="envio">Enviar</button>
+
+        </form>
+    </div>
+
+    <!--SCRIPTS-->
+
+    <!--Valores padrão de inputs-->
+
+    <script src="scripts/padrao.js"></script>
+
+    <!--Botões do site-->
+
+    <script src="scripts/theme.js"></script>
+    <script src="scripts/hudButton.js"></script>
+
+    <!--Classes-->
+
+    <script src="scripts/classes/semEnvio.js"></script>
+    <script src="scripts/classes/usuarioLista.js"></script>
+
+    <!--Envio-->
+
+    <script src="scripts/envio.js"></script>
+
+</body>
+</html>
