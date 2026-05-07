@@ -196,21 +196,277 @@
 
     <!--Valores padrão de inputs-->
 
-    <script src="scripts/padrao.js"></script>
+    <script src="scripts/padrao.js">
+        
+        // Mudando o valor padrão de Data de Nascimento para a data atual
+        document.getElementById("data").valueAsDate = new Date();
+
+        // Mudando o valor padrão de Idioma para o idioma do navegador
+        document.getElementById("idioma").value = navigator.language;
+
+    </script>
 
     <!--Botões do site-->
 
-    <script src="scripts/theme.js"></script>
-    <script src="scripts/hudButton.js"></script>
+    <script>
+
+        // Botão do light / dark mode
+
+        let claro = false;
+
+        const btnTema = document.getElementById("tema");
+        const classList = document.body.classList;
+
+        function themeToggle() {
+
+            claro = !claro;
+
+            classList.toggle("light-mode",claro);
+            classList.toggle("dark-mode",!claro);
+
+            btnTema.textContent = claro ? "☾" : "☀︎"
+
+        }
+
+        classList.add("light-mode");
+        classList.add("dark-mode");
+
+        // Ativação inicial para habilitar o light mode
+
+        themeToggle();
+
+    </script>
+
+    <script>
+
+        // Botão da hud
+        // Redefinindo o topo da navegação para mostrar / ocultar barra de navegação
+        var show = true;
+
+        const hud = document.getElementById("hud");
+        const btn = document.getElementById("hudButton");
+
+        function hudToggle() {
+
+            show = !show;
+
+            if (show) {
+
+                hud.style.top = "0px";
+                btn.innerHTML = "^";
+
+            } else {
+
+                hud.style.top = "-60px";
+                btn.innerHTML = "v";
+
+            }
+
+        }
+
+    </script>
 
     <!--Classes-->
 
-    <script src="scripts/classes/semEnvio.js"></script>
-    <script src="scripts/classes/usuarioLista.js"></script>
+    <script>
+
+        // Classe para previnir envio do formulário pelos input de texto
+
+        for (const input of document.getElementsByClassName("sem-envio"))
+        {
+
+            // Evento ao digitar no input de texto
+            input.addEventListener("keypress", function(event) {
+
+                // Previnir envio do formulário
+                if (event.key == "Enter") {event.preventDefault();}
+
+            });
+
+        }
+
+    </script>
+
+    <script>
+
+        /*
+
+        Classe customizada para o usuário criar sua própria lista
+
+        1. Primeiro elemento como div
+        2. Último elemento como ul vazio
+        3. Primeiro elemento do div como input (Para o nome do elemento a ser criado)
+        4. Primeiro elemento do div como botão (Para criar o elemento)
+
+        */
+
+        for (const td of document.getElementsByClassName("usuario-lista")) {
+
+            // Array para verificação de elementos repitidos
+            let elementos = []
+
+            const div = td.firstElementChild;
+            const ul = td.lastElementChild;
+            const input = div.firstElementChild;
+            const btn = div.lastElementChild;
+
+            function adicionar() {
+
+                const texto = input.value;
+
+                // Verificando se o texto é válido
+                if (!texto) {
+                    alert("Digite um texto antes de adicionar");
+                    return;
+                }
+
+                // Verificando se o texto já foi adicionado
+                for (const elemento of elementos) {
+
+                    if (texto === elemento) {
+                        alert("Já existe o elemento '" + texto + "'' na lista");
+                        return;
+                    }
+
+                }
+
+                // Elemento
+                const novoElemento = document.createElement("li");
+                novoElemento.innerHTML = texto;
+
+                novoElemento.style.transform = "scale(0.5)";
+                novoElemento.style.opacity = 0.5;
+
+                // Aplicar animação no próximo frame
+                setTimeout(function() {
+                    novoElemento.style.transform = "scale(1)";
+                    novoElemento.style.opacity = 1;
+                }, 1)
+
+                // Botão de remoção do elemento
+                const removeBtn = document.createElement("button");
+                removeBtn.type = "button";
+                removeBtn.title = "Remover elemento";
+                removeBtn.innerHTML = "X";
+
+                elementos.push(texto);
+
+                // Evento ao clickar para remover
+                removeBtn.addEventListener("click", function() {
+
+                    const id = elementos.indexOf(texto);
+                    elementos.splice(id,1);
+
+                    novoElemento.style.opacity = 0;
+
+                    setTimeout(function() {ul.removeChild(novoElemento);}, 300)
+
+                });
+
+                novoElemento.appendChild(removeBtn);
+                ul.appendChild(novoElemento);
+
+                // Limpando valor do input
+                input.value = "";
+                
+            }
+
+            // Adicionar elemento ao pressionar o botão adicionar
+            btn.addEventListener("click", adicionar);
+
+            // Adicionar elemento ao pressionar enter
+            input.addEventListener("keypress", function(event) {
+
+                if (event.key == "Enter") {adicionar();}
+
+            });
+
+            // Adicionar elemento caso haja um valor padrão
+            if (input.value) {adicionar();}
+
+        }
+
+    </script>
 
     <!--Envio-->
 
-    <script src="scripts/envio.js"></script>
+    <script>
+
+        // Padrão de emails
+        const emailPrefix = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Padrão de telefones
+        const telPrefix = /^[0-9]{10,11}$/;
+
+        const form = document.getElementById("form");
+        
+        //Campos obrigatórios
+        const apresentacao = document.getElementById("apresentacao");
+        const nome = document.getElementById("nome");
+        const email = document.getElementById("email");
+        const telefone = document.getElementById("tel");
+        const envio = document.getElementById("envio");
+
+        // Verificação de campos obrigatórios vazios ao digitar
+        function campoMudou(event) {
+
+            const tr = event.target.parentElement;
+            const spanObrigatorio = tr.lastElementChild;
+
+            // Esconder ou mostrar span de acordo com a verificação usando "display"
+            spanObrigatorio.style.opacity = event.target.value != "" ? 0 : 1;
+
+        }
+
+        // Eventos de mudança no valor do input
+        apresentacao.addEventListener("input", campoMudou);
+        nome.addEventListener("input", campoMudou);
+        email.addEventListener("input", campoMudou);
+        telefone.addEventListener("input", campoMudou);
+
+        // Evento ao enviar o formulário
+        form.addEventListener("submit", function(event) {
+            
+            // Previnindo limpeza do formulário
+            event.preventDefault();
+
+            if (!emailPrefix.test(email.value)) {
+                alert("Insira um endereço de e-mail válido");
+                email.focus();
+                return;
+            }
+
+            if (!telPrefix.test(telefone.value)) {
+                alert("Insira um número de telefone válido");
+                telefone.focus();
+                return;
+            }
+
+            // Ativa o estado de envio
+            envio.disabled = true;
+            envio.textContent = "Processando Envio...";
+            document.body.classList.add("enviando");
+
+            // Simulação de envio após 2 segundos
+            setTimeout(function() {
+
+                // Limpeza do formulário
+                form.reset();
+
+                document.body.classList.remove("enviando");
+                envio.disabled = false;
+                envio.textContent = "Enviar";
+                
+                // Reseta a data e idioma padrão pós envio
+                document.getElementById("data").valueAsDate = new Date();
+                document.getElementById("idioma").value = navigator.language;
+
+                alert("Mensagem enviada com sucesso!");
+                
+            }, 2000);
+
+        });
+
+    </script>
 
 </body>
 </html>
